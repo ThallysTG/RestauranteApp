@@ -11,15 +11,29 @@ namespace RestauranteApp.Data
 
         public DbSet<ItemCardapio> ItensCardapio => Set<ItemCardapio>();
         public DbSet<Ingrediente> Ingredientes => Set<Ingrediente>();
-        public DbSet<ItemCardapioIngrediente> ItensCardapioIngredientes => Set<ItemCardapioIngrediente>();
-        public DbSet<SugestaoDoChefe> SugestoesDoChefe => Set<SugestaoDoChefe>();
-        public DbSet<Pedido> Pedidos => Set<Pedido>();
-        public DbSet<Mesa> Mesas => Set<Mesa>();
-        public DbSet<Reserva> Reservas => Set<Reserva>();
-        public DbSet<PerfilCliente> PerfisClientes => Set<PerfilCliente>();
+        //public DbSet<ItemCardapioIngrediente> ItensCardapioIngredientes => Set<ItemCardapioIngrediente>();
+        //public DbSet<SugestaoDoChefe> SugestoesDoChefe => Set<SugestaoDoChefe>();
+        //public DbSet<Pedido> Pedidos => Set<Pedido>();
+        //public DbSet<PedidoItem> PedidoItens => Set<PedidoItem>();
+
+        //public DbSet<Mesa> Mesas => Set<Mesa>();
+        //public DbSet<Reserva> Reservas => Set<Reserva>();
+        //public DbSet<PerfilCliente> PerfisClientes => Set<PerfilCliente>();
+
+        //public DbSet<Atendimento> Atendimentos => Set<Atendimento>();
+        //public DbSet<EnderecoEntrega> EnderecosEntrega => Set<EnderecoEntrega>();
+       //public DbSet<ParceiroApp> ParceirosApp => Set<ParceiroApp>();
+
+        protected override void OnModelCreating(ModelBuilder b) { 
+            base.OnModelCreating(b);
+
+            b.Entity<ItemCardapio>()
+                .HasMany(i => i.Ingredientes)
+                .WithMany(i => i.Itens);
 
 
 
-        protected override void OnModelCreating(ModelBuilder b) { base.OnModelCreating(b); }
+
+        }
     }
 }
