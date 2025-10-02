@@ -23,7 +23,7 @@ namespace RestauranteApp.Pages.Ingredientes
 
         public async Task OnGetAsync()
         {
-            Ingrediente = await _context.Ingredientes.ToListAsync();
+            Ingrediente = await _context.Ingredientes.OrderBy(i => i.Nome).ToListAsync();
         }
     }
 }
