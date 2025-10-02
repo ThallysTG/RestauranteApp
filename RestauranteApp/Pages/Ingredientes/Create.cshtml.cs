@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using RestauranteApp.Data;
+using RestauranteApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using RestauranteApp.Data;
-using RestauranteApp.Models;
 
 namespace RestauranteApp.Pages.Ingredientes
 {
@@ -30,6 +31,13 @@ namespace RestauranteApp.Pages.Ingredientes
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if (await _context.Ingredientes.AnyAsync(i => i.Nome == Ingrediente.Nome))
+            {
+                ModelState.AddModelError("Ingrediente.Nome", "Já existe um ingrediente com esse nome.");
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
