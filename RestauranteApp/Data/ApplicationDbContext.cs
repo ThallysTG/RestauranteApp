@@ -16,8 +16,8 @@ namespace RestauranteApp.Data
         //public DbSet<Pedido> Pedidos => Set<Pedido>();
         //public DbSet<PedidoItem> PedidoItens => Set<PedidoItem>();
 
-        //public DbSet<Mesa> Mesas => Set<Mesa>();
-        //public DbSet<Reserva> Reservas => Set<Reserva>();
+        public DbSet<Mesa> Mesas => Set<Mesa>();
+        public DbSet<Reserva> Reservas => Set<Reserva>();
         //public DbSet<PerfilCliente> PerfisClientes => Set<PerfilCliente>();
 
         //public DbSet<Atendimento> Atendimentos => Set<Atendimento>();
@@ -31,6 +31,9 @@ namespace RestauranteApp.Data
                 .HasMany(i => i.Ingredientes)
                 .WithMany(i => i.Itens);
 
+            b.Entity<Reserva>()
+                .HasIndex(r => new { r.MesaId, r.DataHora })
+                .IsUnique();
         }
     }
 }

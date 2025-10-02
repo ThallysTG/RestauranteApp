@@ -1,0 +1,45 @@
+﻿@page
+@model RestauranteApp.Pages.Reservas.CreateModel
+
+        @{
+    ViewData["Title"] = "Nova reserva";
+        }
+
+<h1>Nova reserva</h1>
+        
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Reserva.DataHora" class="form-label"></label>
+                <input asp-for="Reserva.DataHora" type="datetime-local" class="form-control" />
+                <small class="form-text text-muted">Somente entre 19:00 e 22:00.</small>
+                <span asp-validation-for="Reserva.DataHora" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Reserva.NumeroPessoas" class="control-label"></label>
+                <input asp-for="Reserva.NumeroPessoas" class="form-control" />
+                <span asp-validation-for="Reserva.NumeroPessoas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Mesa</label>
+                <select asp-for="Reserva.MesaId" class="form-select" asp-items="Model.MesasOptions"></select>
+                <span asp-validation-for="Reserva.MesaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
