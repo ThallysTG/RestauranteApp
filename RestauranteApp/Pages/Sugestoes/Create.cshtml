@@ -1,0 +1,44 @@
+﻿@page
+@model RestauranteApp.Pages.Sugestoes.CreateModel
+
+        @{
+    ViewData["Title"] = "Marcar Sugestão do Chefe";
+        }
+
+<h1>Marcar Sugestão do Chefe</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Sugestao.Data" class="form-label"></label>
+        <input asp-for="Sugestao.Data" type="date" class="form-control" />
+        <span asp-validation-for="Sugestao.Data" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Sugestao.Periodo" class="form-label"></label>
+        <select asp-for="Sugestao.Periodo"
+                class="form-select"
+                asp-items="Html.GetEnumSelectList<RestauranteApp.Models.Periodo>()">
+        </select>
+        <span asp-validation-for="Sugestao.Periodo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Sugestao.ItemCardapioId" class="form-label">Item do Cardápio</label>
+        <select asp-for="Sugestao.ItemCardapioId"
+                class="form-select"
+                asp-items="Model.ItensOptions">
+            <option value="">Selecione</option>
+        </select>
+        <span asp-validation-for="Sugestao.ItemCardapioId" class="text-danger"></span>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-page="Index" class="btn btn-secondary">Voltar</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

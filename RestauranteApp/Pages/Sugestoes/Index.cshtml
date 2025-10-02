@@ -1,0 +1,42 @@
+﻿@page
+@model RestauranteApp.Pages.Sugestoes.IndexModel
+
+@{
+    ViewData["Title"] = "Sugestão do Chefe (Admin)";
+}
+
+<h1>Sugestão do Chefe</h1>
+
+<p>
+    <a asp-page="Create">Marcar sugestão</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Lista[0].Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lista[0].Periodo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lista[0].Item)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Lista)
+        {
+            <tr>
+                <td>@s.Data.ToString("dd/MM/yyyy")</td>
+                <td>@s.Periodo</td>
+                <td>@s.Item?.Nome</td>
+                <td class="text-end">
+                    <a asp-page="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                </td>
+            </tr>
+        }
+}
+    </tbody>
+</table>

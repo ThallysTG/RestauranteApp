@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestauranteApp.Data;
 
@@ -11,9 +12,11 @@ using RestauranteApp.Data;
 namespace RestauranteApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251002194506_Mesas_UniqueNumero")]
+    partial class Mesas_UniqueNumero
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,33 +334,6 @@ namespace RestauranteApp.Data.Migrations
                     b.ToTable("Reservas");
                 });
 
-            modelBuilder.Entity("RestauranteApp.Models.SugestaoDoChefe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("Data")
-                        .HasColumnType("date");
-
-                    b.Property<int>("ItemCardapioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Periodo")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemCardapioId");
-
-                    b.HasIndex("Data", "Periodo")
-                        .IsUnique();
-
-                    b.ToTable("SugestoesDoChefe");
-                });
-
             modelBuilder.Entity("IngredienteItemCardapio", b =>
                 {
                     b.HasOne("RestauranteApp.Models.Ingrediente", null)
@@ -433,17 +409,6 @@ namespace RestauranteApp.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Mesa");
-                });
-
-            modelBuilder.Entity("RestauranteApp.Models.SugestaoDoChefe", b =>
-                {
-                    b.HasOne("RestauranteApp.Models.ItemCardapio", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemCardapioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("RestauranteApp.Models.Mesa", b =>
