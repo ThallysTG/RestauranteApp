@@ -12,36 +12,36 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemCardapio.Nome)
+            @Html.DisplayNameFor(model => model.Item.Nome)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemCardapio.Nome)
+            @Html.DisplayFor(model => model.Item.Nome)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemCardapio.Descricao)
+            @Html.DisplayNameFor(model => model.Item.Descricao)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemCardapio.Descricao)
+            @Html.DisplayFor(model => model.Item.Descricao)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemCardapio.PrecoBase)
+            @Html.DisplayNameFor(model => model.Item.PrecoBase)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemCardapio.PrecoBase)
+            @Html.DisplayFor(model => model.Item.PrecoBase)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ItemCardapio.Periodo)
+            @Html.DisplayNameFor(model => model.Item.Periodo)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ItemCardapio.Periodo)
+            @Html.DisplayFor(model => model.Item.Periodo)
         </dd>
 
         <dd class="col-sm-2">
-            Ingredientes (@(Model.ItemCardapio.Ingredientes.Count)):
-            @if (Model.ItemCardapio.Ingredientes.Any())
+            Ingredientes (@(Model.Item.Ingredientes.Count)):
+            @if (Model.Item.Ingredientes.Any())
             {
                 <ul>
-                    @foreach (var ingrediente in Model.ItemCardapio.Ingredientes)
+                    @foreach (var ingrediente in Model.Item.Ingredientes)
                     {
                         <li>@ingrediente.Nome</li>
                     }
@@ -55,6 +55,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.ItemCardapio.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Item.Id">Editar</a> |
+    <a asp-page="./Index">Voltar</a>
 </div>

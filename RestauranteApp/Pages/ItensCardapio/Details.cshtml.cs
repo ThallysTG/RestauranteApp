@@ -19,25 +19,19 @@ namespace RestauranteApp.Pages.ItensCardapio
             _context = context;
         }
 
-        public ItemCardapio ItemCardapio { get; set; } = default!;
+        public ItemCardapio Item { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var itemcardapio = await _context.ItensCardapio.FirstOrDefaultAsync(m => m.Id == id);
+            Item = await _context.ItensCardapio
+                .Include(i => i.Ingredientes)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (itemcardapio is not null)
-            {
-                ItemCardapio = itemcardapio;
+            if (Item == null) return NotFound();
 
-                return Page();
-            }
-
-            return NotFound();
+            return Page();
         }
     }
 }

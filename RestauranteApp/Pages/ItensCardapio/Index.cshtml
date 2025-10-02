@@ -8,28 +8,28 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Novo item</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ItemCardapio[0].Nome)
+                @Html.DisplayNameFor(model => model.Itens[0].Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ItemCardapio[0].Descricao)
+                @Html.DisplayNameFor(model => model.Itens[0].Descricao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ItemCardapio[0].PrecoBase)
+                @Html.DisplayNameFor(model => model.Itens[0].PrecoBase)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ItemCardapio[0].Periodo)
+                @Html.DisplayNameFor(model => model.Itens[0].Periodo)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ItemCardapio) {
+@foreach (var item in Model.Itens) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
@@ -44,9 +44,9 @@
                 @Html.DisplayFor(modelItem => item.Periodo)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Excluir</a>
             </td>
         </tr>
 }

@@ -31,9 +31,6 @@ namespace RestauranteApp.Data
                 .HasMany(i => i.Ingredientes)
                 .WithMany(i => i.Itens);
 
-
-
-
         }
     }
 }
