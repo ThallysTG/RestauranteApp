@@ -18,17 +18,17 @@ namespace RestauranteApp.Pages.Reservas
         private readonly RestauranteApp.Data.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public IndexModel(RestauranteApp.Data.ApplicationDbContext context, UserManager<IdentityUser> _userManager)
+        public IndexModel(RestauranteApp.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
-            _userManager = _userManager;
+            _userManager = userManager;
         }
 
         public IList<Reserva> Lista { get;set; } = new List<Reserva>();
 
         public async Task OnGetAsync()
         {
-            var userId = _userManager.GetUserId(User);
+            var userId = _userManager?.GetUserId(User);
 
             Lista = await _context.Reservas
                 .Include(r => r.Mesa)
