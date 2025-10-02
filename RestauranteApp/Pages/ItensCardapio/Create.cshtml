@@ -2,40 +2,56 @@
 @model RestauranteApp.Pages.ItensCardapio.CreateModel
 
         @{
-        ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo item do cardápio";
         }
         
-        <h1>Create</h1>
+        <h1>Novo item</h1>
         
-    <h4>ItemCardapio</h4>
     <hr />
     <div class="row">
     <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ItemCardapio.Nome" class="control-label"></label>
-                <input asp-for="ItemCardapio.Nome" class="form-control" />
-                <span asp-validation-for="ItemCardapio.Nome" class="text-danger"></span>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Item.Nome" class="form-label"></label>
+                <input asp-for="Item.Nome" class="form-control" />
+                <span asp-validation-for="Item.Nome" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemCardapio.Descricao" class="control-label"></label>
-                <input asp-for="ItemCardapio.Descricao" class="form-control" />
-                <span asp-validation-for="ItemCardapio.Descricao" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label asp-for="Item.Descricao" class="form-label"></label>
+                <input asp-for="Item.Descricao" class="form-control" />
+                <span asp-validation-for="Item.Descricao" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemCardapio.PrecoBase" class="control-label"></label>
-                <input asp-for="ItemCardapio.PrecoBase" class="form-control" />
-                <span asp-validation-for="ItemCardapio.PrecoBase" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label asp-for="Item.PrecoBase" class="form-label"></label>
+                <input asp-for="Item.PrecoBase" class="form-control" />
+                <span asp-validation-for="Item.PrecoBase" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemCardapio.Periodo" class="control-label"></label>
-                <select asp-for="ItemCardapio.Periodo" class="form-control"></select>
-                <span asp-validation-for="ItemCardapio.Periodo" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label asp-for="Item.Periodo" class="form-label"></label>
+                <select asp-for="Item.Periodo" class="form-select"
+                        asp-items="Html.GetEnumSelectList<RestauranteApp.Models.Periodo>()"></select>
+                <span asp-validation-for="Item.Periodo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
+            <fieldset class="mb-3">
+                <legend>Ingredientes</legend>
+                @foreach (var ing in Model.TodosIngredientes)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               name="IngredientesSelecionados"
+                               value="@ing.Id"
+                               id="ing_@ing.Id" />
+                        <label class="form-check-label" for="ing_@ing.Id">@ing.Nome</label>
+                    </div>
+                }
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-page="Index" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
 </div>

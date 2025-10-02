@@ -19,11 +19,14 @@ namespace RestauranteApp.Pages.ItensCardapio
             _context = context;
         }
 
-        public IList<ItemCardapio> ItemCardapio { get;set; } = default!;
+        public IList<ItemCardapio> Itens { get;set; } = new List<ItemCardapio>();
+
 
         public async Task OnGetAsync()
         {
-            ItemCardapio = await _context.ItensCardapio.ToListAsync();
+            Itens = await _context.ItensCardapio
+                .Include(i => i.Ingredientes)
+                .ToListAsync();
         }
     }
 }

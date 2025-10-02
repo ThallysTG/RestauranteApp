@@ -1,11 +1,11 @@
-﻿@page
+﻿@page "{id:int}"
 @model RestauranteApp.Pages.ItensCardapio.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do item";
 }
 
-<h1>Details</h1>
+<h1>Detalhes do item</h1>
 
 <div>
     <h4>ItemCardapio</h4>
@@ -35,6 +35,23 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ItemCardapio.Periodo)
         </dd>
+
+        <dd class="col-sm-2">
+            Ingredientes (@(Model.ItemCardapio.Ingredientes.Count)):
+            @if (Model.ItemCardapio.Ingredientes.Any())
+            {
+                <ul>
+                    @foreach (var ingrediente in Model.ItemCardapio.Ingredientes)
+                    {
+                        <li>@ingrediente.Nome</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Nenhum ingrediente associado.</p>
+            }
+)))
     </dl>
 </div>
 <div>
