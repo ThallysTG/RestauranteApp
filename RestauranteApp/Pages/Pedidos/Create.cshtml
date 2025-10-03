@@ -19,24 +19,32 @@
 
         <div class="col-md-3">
             <label class="form-label">Atendimento</label>
-            <select asp-for="TipoAtendimento" class="form-select">
+            <select asp-for="TipoAtendimento" id="TipoAtendimento" class="form-select">
                 <option value="Presencial">Presencial</option>
                 <option value="DeliveryProprio">Delivery Próprio</option>
                 <option value="DeliveryAplicativo">Delivery Aplicativo</option>
             </select>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-6" id="endereco-section" style="display:none;">
+            <label asp-for="EnderecoId" class="form-label">Endereço de entrega</label>
+            <select asp-for="EnderecoId" asp-items="Model.Enderecos" class="form-select">
+                <option value="">-- selecione --</option>
+            </select>
+            <span asp-validation-for="EnderecoId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3" id="sec-taxa">
             <label class="form-label">Taxa Fixa (se houver)</label>
             <input asp-for="TaxaFixa" class="form-control" />
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3" id="sec-comissao" style="display:none;">
             <label class="form-label">Comissão % (app)</label>
             <input asp-for="ComissaoPercentual" class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" id="sec-parceiro" style="display:none;">
             <label class="form-label">Parceiro (app)</label>
             <input asp-for="Parceiro" class="form-control" />
         </div>
@@ -53,31 +61,50 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.Itens.Count; i++)
-            {
-                <tr>
-                    <td>@Model.Itens[i].Periodo</td>
-                    <td>@Model.Itens[i].Nome</td>
-                    <td class="text-end">@Model.Itens[i].Preco.ToString("C")</td>
-                    <td class="text-end" style="width:120px">
-                        <input asp-for="Itens[i].Quantidade" class="form-control form-control-sm text-end" />
-                        <input type="hidden" asp-for="Itens[i].ItemCardapioId" />
-                        <input type="hidden" asp-for="Itens[i].Nome" />
-                        <input type="hidden" asp-for="Itens[i].Preco" />
-                        <input type="hidden" asp-for="Itens[i].Periodo" />  
-                        <span asp-validation-for="Itens[i].Quantidade" class="text-danger"></span>
-                    </td>
-                </tr>
-            }
+        @for (int i = 0; i < Model.Itens.Count; i++)
+        {
+            <tr>
+                <td>@Model.Itens[i].Periodo</td>
+                <td>@Model.Itens[i].Nome</td>
+                <td class="text-end">@Model.Itens[i].Preco.ToString("C")</td>
+                <td class="text-end" style="width:120px">
+                    <input asp-for="Itens[i].Quantidade" class="form-control form-control-sm text-end" />
+                    <input type="hidden" asp-for="Itens[i].ItemCardapioId" />
+                    <input type="hidden" asp-for="Itens[i].Nome" />
+                    <input type="hidden" asp-for="Itens[i].Preco" />
+                    <input type="hidden" asp-for="Itens[i].Periodo" />
+                    <span asp-validation-for="Itens[i].Quantidade" class="text-danger"></span>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <button type="submit" class="btn btn-primary">Salvar Pedido</button>
-    <a asp-page="/Index" class="btn btn-secondary">Cancelar</a>
+    <a asp-page="./Index" class="btn btn-secondary">Cancelar</a>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function toggleCamposPorAtendimento() {
+            const tipo = document.getElementById("TipoAtendimento").value;
+
+            const secEndereco = document.getElementById("endereco-section");
+            const secTaxa = document.getElementById("sec-taxa");
+            const secComissao = document.getElementById("sec-comissao");
+            const secParceiro = document.getElementById("sec-parceiro");
+
+            secEndereco.style.display = (tipo === "Presencial") ? "none" : "block";
+            secTaxa.style.display = (tipo !== "Presencial") ? "block" : "none";
+            secComissao.style.display = (tipo === "DeliveryAplicativo") ? "block" : "none";
+            secParceiro.style.display = (tipo === "DeliveryAplicativo") ? "block" : "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", toggleCamposPorAtendimento);
+        document.getElementById("TipoAtendimento").addEventListener("change", toggleCamposPorAtendimento);
+    </script>
 }

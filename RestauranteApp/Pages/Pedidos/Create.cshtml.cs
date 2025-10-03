@@ -35,6 +35,8 @@ namespace RestauranteApp.Pages.Pedidos
             [Range(0, 999)]
             public int Quantidade { get; set; } 
             public Periodo Periodo { get; set; }
+
+            
         }
 
         [BindProperty(SupportsGet = true)]
@@ -42,6 +44,11 @@ namespace RestauranteApp.Pages.Pedidos
 
         [BindProperty]
         public string TipoAtendimento { get; set; } = "Presencial";
+
+        [BindProperty]
+        public int? EnderecoId { get; set; }
+
+        public List<SelectListItem> Enderecos { get; set; } = new();
 
         // campos específicos dos atendimentos
         [BindProperty] public decimal? TaxaFixa { get; set; }           // delivery próprio/app
@@ -54,6 +61,7 @@ namespace RestauranteApp.Pages.Pedidos
         public async Task OnGetAsync()
         {
             await CarregarItensAsync();
+            await CarregarEnderecosAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -75,6 +83,17 @@ namespace RestauranteApp.Pages.Pedidos
                 return Page();
             }
 
+            if (TipoAtendimento != "Presencial")
+            {
+                if (EnderecoId == null)
+                {
+                    ModelState.AddModelError("EnderecoId", "Selecione um endereço de entrega.");
+                    await CarregarItensAsync();
+                    await CarregarEnderecosAsync();
+                    return Page();
+                }
+            }
+
             Atendimento atendimento = TipoAtendimento switch
             {
                 "Presencial" => new AtendimentoPresencial(),
@@ -94,7 +113,8 @@ namespace RestauranteApp.Pages.Pedidos
                 Data = DateTime.Now,
                 PeriodoPedido = PeriodoPedido,
                 Atendimento = atendimento,
-                Itens = itensSelecionados
+                Itens = itensSelecionados,
+                EnderecoEntregaId = (TipoAtendimento == "Presencial") ? null : EnderecoId
             };
 
             await _pricing.CalcularTotaisAsync(pedido);   
@@ -116,6 +136,19 @@ namespace RestauranteApp.Pages.Pedidos
                     Preco = i.PrecoBase,
                     Quantidade = 0,
                     Periodo = i.Periodo
+                })
+                .ToListAsync();
+        }
+
+        private async Task CarregarEnderecosAsync()
+        {
+            var userId = _userManager.GetUserId(User);
+            Enderecos = await _context.EnderecosEntrega
+                .Where(e => e.Perfil.UsuarioId == userId)
+                .Select(e => new SelectListItem
+                {
+                    Value = e.Id.ToString(),
+                    Text = $"{e.Titulo} - {e.Logradouro}, {e.Numero} ({e.Cidade})"
                 })
                 .ToListAsync();
         }

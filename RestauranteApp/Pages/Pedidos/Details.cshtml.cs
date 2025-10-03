@@ -27,6 +27,7 @@ namespace RestauranteApp.Pages.Pedidos
                 .Include(p => p.Atendimento)
                 .Include(p => p.Itens)
                     .ThenInclude(pi => pi.Item)
+                .Include(p => p.EnderecoEntrega)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pedido is null) return NotFound();

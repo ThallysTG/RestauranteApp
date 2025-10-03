@@ -18,10 +18,10 @@ namespace RestauranteApp.Data
 
         public DbSet<Mesa> Mesas => Set<Mesa>();
         public DbSet<Reserva> Reservas => Set<Reserva>();
-        //public DbSet<PerfilCliente> PerfisClientes => Set<PerfilCliente>();
+        public DbSet<PerfilCliente> PerfisClientes => Set<PerfilCliente>();
 
         public DbSet<Atendimento> Atendimentos => Set<Atendimento>();
-        //public DbSet<EnderecoEntrega> EnderecosEntrega => Set<EnderecoEntrega>();
+        public DbSet<EnderecoEntrega> EnderecosEntrega => Set<EnderecoEntrega>();
        //public DbSet<ParceiroApp> ParceirosApp => Set<ParceiroApp>();
 
         protected override void OnModelCreating(ModelBuilder b) { 
@@ -34,6 +34,10 @@ namespace RestauranteApp.Data
             b.Entity<Reserva>()
                 .HasIndex(r => new { r.MesaId, r.DataHora })
                 .IsUnique();
+
+            b.Entity<PerfilCliente>()
+                .HasIndex(p => p.UsuarioId)
+                .IsUnique(); // 1–1 com usuário
 
             b.Entity<Mesa>()
                 .HasIndex(m => m.Numero)

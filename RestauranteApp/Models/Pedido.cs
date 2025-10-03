@@ -24,5 +24,8 @@ namespace RestauranteApp.Models
         public decimal TotalDescontos { get; set; }
         public decimal TotalTaxas { get; set; }
         public decimal TotalFinal { get; set; }
+
+        public int? EnderecoEntregaId { get; set; }          // null para Presencial
+        public EnderecoEntrega? EnderecoEntrega { get; set; }
     }
 }
