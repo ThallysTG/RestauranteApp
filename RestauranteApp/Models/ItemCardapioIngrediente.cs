@@ -3,8 +3,8 @@
     public class ItemCardapioIngrediente
     {
         public int ItemCardapioId { get; set; }
-        public ItemCardapio ItemCardapio { get; set; } = default!;
+        public ItemCardapio? ItemCardapio { get; set; }
         public int IngredienteId { get; set; }
-        public Ingrediente Ingrediente { get; set; } = default!;
+        public Ingrediente? Ingrediente { get; set; }
     }
 }

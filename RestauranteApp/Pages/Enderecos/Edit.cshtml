@@ -1,0 +1,79 @@
+﻿@page
+@model RestauranteApp.Pages.Enderecos.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>EnderecoEntrega</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EnderecoEntrega.Id" />
+           
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.Titulo" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.Titulo" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.Logradouro" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.Logradouro" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.Logradouro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.Numero" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.Numero" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="EnderecoEntrega.Complemento" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.Complemento" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.Complemento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.Bairro" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.Bairro" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.Bairro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.Cidade" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.Cidade" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.Cidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.UF" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.UF" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.UF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EnderecoEntrega.CEP" class="control-label"></label>
+                <input asp-for="EnderecoEntrega.CEP" class="form-control" />
+                <span asp-validation-for="EnderecoEntrega.CEP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

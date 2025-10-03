@@ -24,6 +24,22 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// services
+builder.Services.AddRazorPages(options =>
+{
+    // Protegidas (precisa estar logado)
+    options.Conventions.AuthorizeFolder("/Pedidos");
+    options.Conventions.AuthorizeFolder("/Reservas");
+    options.Conventions.AuthorizeFolder("/Mesas");
+    options.Conventions.AuthorizeFolder("/Ingredientes");
+    options.Conventions.AuthorizeFolder("/SugestoesDoChefe");
+    options.Conventions.AuthorizeFolder("/Enderecos");     // se quiser endereços privados
+
+    // Públicas
+    options.Conventions.AllowAnonymousToFolder("/ItensCardapio"); // cardápio
+    options.Conventions.AllowAnonymousToPage("/Index");           // Home
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<PedidoPricingService>();
 
@@ -56,5 +72,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages().WithStaticAssets();
+await DbInitializer.SeedAsync(app.Services);
 
 app.Run();

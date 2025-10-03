@@ -29,3 +29,24 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Dá um respiro nos títulos e tabelas */
+h1, h2, h3 {
+    margin-bottom: .75rem;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+/* Cards de destaque na home */
+.hero-card {
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 .15rem .6rem rgba(0,0,0,.04);
+    border-radius: .75rem;
+}
+
+.badge-periodo {
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}

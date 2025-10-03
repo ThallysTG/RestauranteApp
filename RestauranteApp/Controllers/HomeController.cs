@@ -1,32 +1,42 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RestauranteApp.Data;
 using RestauranteApp.Models;
+using RestauranteApp.Models.ViewModels;
+using System.Diagnostics;
 
 namespace RestauranteApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _ctx;
+        public HomeController(ApplicationDbContext ctx) => _ctx = ctx;
 
-        public HomeController(ILogger<HomeController> logger)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
+            var hoje = DateOnly.FromDateTime(DateTime.Today);
+
+            var almoco = await _ctx.SugestoesDoChefe
+                .Include(s => s.Item)
+                .Where(s => s.Data == hoje && s.Periodo == Periodo.Almoco)
+                .Select(s => s.Item)
+                .FirstOrDefaultAsync();
+
+            var jantar = await _ctx.SugestoesDoChefe
+                .Include(s => s.Item)
+                .Where(s => s.Data == hoje && s.Periodo == Periodo.Jantar)
+                .Select(s => s.Item)
+                .FirstOrDefaultAsync();
+
+            var vm = new HomeSugestoesVM
+            {
+                SugestaoAlmoco = almoco,
+                SugestaoJantar = jantar
+            };
+
+            return View(vm);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Privacy() => View();
     }
 }

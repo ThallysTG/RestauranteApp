@@ -67,6 +67,12 @@ namespace RestauranteApp.Data
             b.Entity<Pedido>().Property(p => p.TotalDescontos).HasPrecision(18, 2);
             b.Entity<Pedido>().Property(p => p.TotalTaxas).HasPrecision(18, 2);
             b.Entity<Pedido>().Property(p => p.TotalFinal).HasPrecision(18, 2);
+
+            b.Entity<EnderecoEntrega>()
+                .HasOne(e => e.Perfil)
+                .WithMany(p => p.Enderecos)
+                .HasForeignKey(e => e.PerfilClienteId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 }
 }
