@@ -1,0 +1,44 @@
+﻿@page
+@model RestauranteApp.Pages.Pedidos.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Novo Pedido</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Pedidos[0].Data)</th>
+            <th>@Html.DisplayNameFor(model => model.Pedidos[0].PeriodoPedido)</th>
+            <th>@Html.DisplayNameFor(model => model.Pedidos[0].UsuarioId)</th>
+            <th>@Html.DisplayNameFor(model => model.Pedidos[0].Atendimento)</th>
+            <th>@Html.DisplayNameFor(model => model.Pedidos[0].SubtotalItens)</th>
+            <th>@Html.DisplayNameFor(model => model.Pedidos[0].TotalFinal)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Pedidos)
+        {
+            <tr>
+                <td>@item.Data.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.PeriodoPedido</td>
+                <td>@item.UsuarioId</td>
+                <td>@item.Atendimento?.Tipo</td>
+                <td>@item.SubtotalItens.ToString("C")</td>
+                <td>@item.TotalFinal.ToString("C")</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a> |
+                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a> |
+                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

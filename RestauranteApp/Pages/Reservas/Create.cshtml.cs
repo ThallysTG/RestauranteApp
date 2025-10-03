@@ -30,7 +30,7 @@ namespace RestauranteApp.Pages.Reservas
         public async Task<IActionResult> OnGetAsync()
         {
             await CarregarMesasAsync();
-            // sugestão: pré-setar para hoje às 19:00
+            
             Reserva.DataHora = DateTime.Today.AddHours(19);
             return Page();
         }

@@ -13,14 +13,14 @@ namespace RestauranteApp.Data
         public DbSet<Ingrediente> Ingredientes => Set<Ingrediente>();
         //public DbSet<ItemCardapioIngrediente> ItensCardapioIngredientes => Set<ItemCardapioIngrediente>();
         public DbSet<SugestaoDoChefe> SugestoesDoChefe => Set<SugestaoDoChefe>();
-        //public DbSet<Pedido> Pedidos => Set<Pedido>();
-        //public DbSet<PedidoItem> PedidoItens => Set<PedidoItem>();
+        public DbSet<Pedido> Pedidos => Set<Pedido>();
+        public DbSet<PedidoItem> PedidoItens => Set<PedidoItem>();
 
         public DbSet<Mesa> Mesas => Set<Mesa>();
         public DbSet<Reserva> Reservas => Set<Reserva>();
         //public DbSet<PerfilCliente> PerfisClientes => Set<PerfilCliente>();
 
-        //public DbSet<Atendimento> Atendimentos => Set<Atendimento>();
+        public DbSet<Atendimento> Atendimentos => Set<Atendimento>();
         //public DbSet<EnderecoEntrega> EnderecosEntrega => Set<EnderecoEntrega>();
        //public DbSet<ParceiroApp> ParceirosApp => Set<ParceiroApp>();
 
@@ -42,6 +42,27 @@ namespace RestauranteApp.Data
             b.Entity<SugestaoDoChefe>()
                 .HasIndex(s => new { s.Data, s.Periodo })
                 .IsUnique(); // 1 sugestão por dia e por período
+                             // opcoes para Atendimento
+            b.Entity<Atendimento>()
+             .HasDiscriminator<string>("Discriminator")
+             .HasValue<AtendimentoPresencial>("Presencial")
+             .HasValue<AtendimentoDeliveryProprio>("DeliveryProprio")
+             .HasValue<AtendimentoDeliveryAplicativo>("DeliveryAplicativo");
+
+            // 1–1 pedido <-> atendimento
+            b.Entity<Pedido>()
+             .HasOne(p => p.Atendimento)
+             .WithOne(a => a.Pedido)
+             .HasForeignKey<Pedido>(p => p.AtendimentoId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            b.Entity<ItemCardapio>().Property(i => i.PrecoBase).HasPrecision(18, 2);
+            b.Entity<PedidoItem>().Property(i => i.PrecoUnitarioBase).HasPrecision(18, 2);
+            b.Entity<PedidoItem>().Property(i => i.DescontoUnitarioAplicado).HasPrecision(18, 2);
+            b.Entity<Pedido>().Property(p => p.SubtotalItens).HasPrecision(18, 2);
+            b.Entity<Pedido>().Property(p => p.TotalDescontos).HasPrecision(18, 2);
+            b.Entity<Pedido>().Property(p => p.TotalTaxas).HasPrecision(18, 2);
+            b.Entity<Pedido>().Property(p => p.TotalFinal).HasPrecision(18, 2);
         }
 }
 }

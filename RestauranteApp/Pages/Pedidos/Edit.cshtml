@@ -1,0 +1,78 @@
+﻿@page
+@model RestauranteApp.Pages.Pedidos.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Pedido</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Pedido.Id" />
+            <div class="form-group">
+                
+                <label asp-for="Pedido.Data" class="control-label"></label>
+                <input asp-for="Pedido.Data" class="form-control" />
+                <span asp-validation-for="Pedido.Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.PeriodoPedido" class="control-label"></label>
+                <select asp-for="Pedido.PeriodoPedido" class="form-control"></select>
+                <span asp-validation-for="Pedido.PeriodoPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.UsuarioId" class="control-label"></label>
+                <input asp-for="Pedido.UsuarioId" class="form-control" />
+                <span asp-validation-for="Pedido.UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.AtendimentoId" class="control-label"></label>
+                <select asp-for="Pedido.AtendimentoId" class="form-control" asp-items="ViewBag.AtendimentoId"></select>
+                <span asp-validation-for="Pedido.AtendimentoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.SubtotalItens" class="control-label"></label>
+                <input asp-for="Pedido.SubtotalItens" class="form-control" />
+                <span asp-validation-for="Pedido.SubtotalItens" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.TotalDescontos" class="control-label"></label>
+                <input asp-for="Pedido.TotalDescontos" class="form-control" />
+                <span asp-validation-for="Pedido.TotalDescontos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.TotalTaxas" class="control-label"></label>
+                <input asp-for="Pedido.TotalTaxas" class="form-control" />
+                <span asp-validation-for="Pedido.TotalTaxas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Pedido.TotalFinal" class="control-label"></label>
+                <input asp-for="Pedido.TotalFinal" class="form-control" />
+                <span asp-validation-for="Pedido.TotalFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
