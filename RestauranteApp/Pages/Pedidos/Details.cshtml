@@ -6,7 +6,7 @@
 }
 
 <h2>Pedido #@Model.Pedido.Id</h2>
-<p><strong>Data:</strong> @Model.Pedido.Data:dd/MM/yyyy HH:mm</p>
+<p><strong>Data:</strong> @Model.Pedido.Data.ToString("dd/MM/yyyy HH:mm")
 <p><strong>Período:</strong> @Model.Pedido.PeriodoPedido</p>
 <p><strong>Atendimento:</strong> @Model.Pedido.Atendimento?.Tipo</p>
 
@@ -26,7 +26,7 @@
                 <td>@i.Item?.Nome</td>
                 <td class="text-end">@i.PrecoUnitarioBase.ToString("C")</td>
                 <td class="text-end">@i.Quantidade</td>
-                <td class="text-end">@((i.PrecoUnitarioBase * i.Quantidade) - i.DescontoUnitarioAplicado * i.Quantidade).ToString("C"))</td>
+                <td class="text-end">@((i.PrecoUnitarioBase * i.Quantidade - i.DescontoUnitarioAplicado * i.Quantidade).ToString("C"))</td>
             </tr>
         }
     </tbody>
