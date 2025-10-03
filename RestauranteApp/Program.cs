@@ -34,6 +34,9 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/Ingredientes");
     options.Conventions.AuthorizeFolder("/SugestoesDoChefe");
     options.Conventions.AuthorizeFolder("/Enderecos");     // se quiser endereços privados
+    options.Conventions.AuthorizeFolder("/ItensCardapio");      // tudo protegido…
+    options.Conventions.AllowAnonymousToPage("/ItensCardapio/Index");   // …exceto
+    options.Conventions.AllowAnonymousToPage("/ItensCardapio/Details"); // leitura
 
     // Públicas
     options.Conventions.AllowAnonymousToFolder("/ItensCardapio"); // cardápio

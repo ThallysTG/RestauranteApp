@@ -5,56 +5,56 @@
     ViewData["Title"] = "Detalhes do item";
 }
 
-<h1>Detalhes do item</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Detalhes do Item</h2>
+        <div class="d-flex gap-2">
+            <a asp-page="./Index" class="btn btn-secondary">Voltar</a>
+            
+        </div>
+    </div>
 
-<div>
-    <h4>ItemCardapio</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Item.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Item.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Item.Descricao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Item.Descricao)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Item.PrecoBase)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Item.PrecoBase)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Item.Periodo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Item.Periodo)
-        </dd>
+    <div class="card shadow-sm">
+        <div class="card-header table-secondary">
+            <strong>@Model.Item.Nome</strong>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Item.Nome)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(m => m.Item.Nome)</dd>
 
-        <dd class="col-sm-2">
-            Ingredientes (@(Model.Item.Ingredientes.Count)):
-            @if (Model.Item.Ingredientes.Any())
-            {
-                <ul>
-                    @foreach (var ingrediente in Model.Item.Ingredientes)
+                <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Item.Descricao)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(m => m.Item.Descricao)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Item.PrecoBase)</dt>
+                <dd class="col-sm-9">
+                    @Model.Item.PrecoBase.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                </dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Item.Periodo)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(m => m.Item.Periodo)</dd>
+
+                <dt class="col-sm-3">Ingredientes (@Model.Item.Ingredientes.Count)</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Item.Ingredientes?.Any() == true)
                     {
-                        <li>@ingrediente.Nome</li>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var ingrediente in Model.Item.Ingredientes)
+                            {
+                                <li class="list-group-item px-0">
+                                    @ingrediente.Nome
+                                </li>
+                            }
+                        </ul>
                     }
-                </ul>
-            }
-            else
-            {
-                <p>Nenhum ingrediente associado.</p>
-            }
-)))
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Item.Id">Editar</a> |
-    <a asp-page="./Index">Voltar</a>
+                    else
+                    {
+                        <span class="text-muted">Nenhum ingrediente associado.</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+
+        
+    </div>
 </div>

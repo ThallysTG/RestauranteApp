@@ -2,41 +2,60 @@
 @model RestauranteApp.Pages.Pedidos.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pedidos";
 }
 
-<p>
-    <a asp-page="Create" class="btn btn-primary">Novo Pedido</a>
-</p>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Lista de Pedidos</h2>
+        <a asp-page="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Novo Pedido
+        </a>
+    </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Pedidos[0].Data)</th>
-            <th>@Html.DisplayNameFor(model => model.Pedidos[0].PeriodoPedido)</th>
-            <th>@Html.DisplayNameFor(model => model.Pedidos[0].UsuarioId)</th>
-            <th>@Html.DisplayNameFor(model => model.Pedidos[0].Atendimento)</th>
-            <th>@Html.DisplayNameFor(model => model.Pedidos[0].SubtotalItens)</th>
-            <th>@Html.DisplayNameFor(model => model.Pedidos[0].TotalFinal)</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Pedidos)
-        {
-            <tr>
-                <td>@item.Data.ToString("dd/MM/yyyy HH:mm")</td>
-                <td>@item.PeriodoPedido</td>
-                <td>@item.UsuarioId</td>
-                <td>@item.Atendimento?.Tipo</td>
-                <td>@item.SubtotalItens.ToString("C")</td>
-                <td>@item.TotalFinal.ToString("C")</td>
-                <td>
-                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a> |
-                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a> |
-                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Excluir</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0 align-middle">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Pedidos[0].Data)</th>
+                            <th>@Html.DisplayNameFor(model => model.Pedidos[0].PeriodoPedido)</th>
+                            <th>@Html.DisplayNameFor(model => model.Pedidos[0].UsuarioId)</th>
+                            <th>@Html.DisplayNameFor(model => model.Pedidos[0].Atendimento)</th>
+                            <th>@Html.DisplayNameFor(model => model.Pedidos[0].SubtotalItens)</th>
+                            <th>@Html.DisplayNameFor(model => model.Pedidos[0].TotalFinal)</th>
+                            <th class="text-center" style="width:200px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Pedidos)
+                        {
+                            <tr>
+                                <td>@item.Data.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@item.PeriodoPedido</td>
+                                <td>@item.UsuarioId</td>
+                                <td>@item.Atendimento?.Tipo</td>
+                                <td>@item.SubtotalItens.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
+                                <td>@item.TotalFinal.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">
+                                            <i class="bi bi-eye"></i> Detalhes
+                                        </a>
+                                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning text-dark">
+                                            <i class="bi bi-pencil"></i> Editar
+                                        </a>
+                                        <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash"></i> Excluir
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

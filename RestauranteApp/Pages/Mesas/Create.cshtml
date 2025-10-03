@@ -1,34 +1,42 @@
 ﻿@page
 @model RestauranteApp.Pages.Mesas.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-        
-        <h1>Create</h1>
-        
-    <h4>Mesa</h4>
-    <hr />
-    <div class="row">
-    <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Mesa.Numero" class="control-label"></label>
-                <input asp-for="Mesa.Numero" class="form-control" />
-                <span asp-validation-for="Mesa.Numero" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+@{
+    ViewData["Title"] = "Nova Mesa";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Nova Mesa</h2>
+        <a asp-page="Index" class="btn btn-secondary">Voltar</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header table-secondary">
+            <strong>Informe os dados da mesa</strong>
+        </div>
+
+        <div class="card-body">
+            <form method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Mesa.Numero" class="form-label"></label>
+                    <input asp-for="Mesa.Numero" class="form-control" inputmode="numeric" min="1" />
+                    <span asp-validation-for="Mesa.Numero" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-page="Index" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

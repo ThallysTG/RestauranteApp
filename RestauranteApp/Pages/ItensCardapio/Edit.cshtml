@@ -5,64 +5,80 @@
     ViewData["Title"] = "Editar item";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Editar Item</h2>
+        
+    </div>
 
-<h4>ItemCardapio</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div class="mb-3">
-                <label asp-for="Item.Nome" class="form-label"></label>
-                <input asp-for="Item.Nome" class="form-control" />
-                <span asp-validation-for="Item.Nome" class="text-danger"></span>
-            </div>
+    <div class="card shadow-sm">
+        <div class="card-header table-secondary">
+            <strong>@Model.Item?.Nome ?? "Item do Cardápio"</strong>
+        </div>
 
-            <div class="mb-3">
-                <label asp-for="Item.Descricao" class="form-label"></label>
-                <input asp-for="Item.Descricao" class="form-control" />
-                <span asp-validation-for="Item.Descricao" class="text-danger"></span>
-            </div>
+        <div class="card-body">
+            <form method="post">
+                @* Necessário para o binding do Update *@
+                <input type="hidden" asp-for="Item.Id" />
 
-            <div class="mb-3">
-                <label asp-for="Item.PrecoBase" class="form-label"></label>
-                <input asp-for="Item.PrecoBase" class="form-control" />
-                <span asp-validation-for="Item.PrecoBase" class="text-danger"></span>
-            </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="mb-3">
-                <label asp-for="Item.Periodo" class="form-label"></label>
-                <select asp-for="Item.Periodo" class="form-select"
-                        asp-items="Html.GetEnumSelectList<RestauranteApp.Models.Periodo>()"></select>
-                <span asp-validation-for="Item.Periodo" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Nome" class="form-label"></label>
+                    <input asp-for="Item.Nome" class="form-control" />
+                    <span asp-validation-for="Item.Nome" class="text-danger"></span>
+                </div>
 
-            <fieldset class="mb-3">
-                <legend>Ingredientes</legend>
-                @foreach (var ing in Model.TodosIngredientes)
-                {
-                    var marcado = Model.IngredientesSelecionados.Contains(ing.Id);
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                               name="IngredientesSelecionados"
-                               value="@ing.Id"
-                               id="ing_@ing.Id"
-                               @(marcado ? "checked" : "") />
-                        <label class="form-check-label" for="ing_@ing.Id">@ing.Nome</label>
+                <div class="mb-3">
+                    <label asp-for="Item.Descricao" class="form-label"></label>
+                    <textarea asp-for="Item.Descricao" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Item.Descricao" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Item.PrecoBase" class="form-label"></label>
+                    <input asp-for="Item.PrecoBase" class="form-control" inputmode="decimal" />
+                    <span asp-validation-for="Item.PrecoBase" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Item.Periodo" class="form-label"></label>
+                    <select asp-for="Item.Periodo" class="form-select"
+                            asp-items="Html.GetEnumSelectList<RestauranteApp.Models.Periodo>()"></select>
+                    <span asp-validation-for="Item.Periodo" class="text-danger"></span>
+                </div>
+
+                <fieldset class="mb-3">
+                    <legend class="h6">Ingredientes</legend>
+                    <div class="row g-2">
+                        @foreach (var ing in Model.TodosIngredientes)
+                        {
+                            var marcado = Model.IngredientesSelecionados.Contains(ing.Id);
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="IngredientesSelecionados"
+                                           value="@ing.Id"
+                                           id="ing_@ing.Id"
+                                           @(marcado ? "checked" : null) />
+                                    <label class="form-check-label" for="ing_@ing.Id">@ing.Nome</label>
+                                </div>
+                            </div>
+                        }
                     </div>
-                }
-            </fieldset>
+                </fieldset>
 
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a asp-page="Index" class="btn btn-secondary">Voltar</a>
-        </form>
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-page="Index" class="btn btn-secondary">Voltar</a>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
